@@ -1,0 +1,46 @@
+  <div class="container">
+    <% @comments.each do |comment| %>
+      <% if comment.comment_id == nil %>
+        <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-2">
+            <%= image_tag comment.user.avatar, class:"img-fluid rounded-circle ", width:"90%" %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><a><%= comment.user.name %> dice :</a></h5>
+              <p class="card-text"><%= comment.content %></p>
+              <%= link_to 'quote', quote_user_path(comment.id) %></br> 
+              <p class="card-text"><small class="text-muted">Creado: <%= comment.created_at %></small></p>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-2">
+            <%= image_tag comment.user.avatar, class:"img-fluid rounded-circle ", width:"90%" %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <%= image_tag comment.father_avatar, class:"img-fluid rounded-circle ", width:"90%" %>
+              <h5 class="card-title"><a><%= comment.father %> dice :</a></h5>
+
+              <p class="card-text">SOY UNA quote<%= comment.content %></p>
+              <%= link_to 'quote', quote_user_path(comment.id) %></br> 
+              <p class="card-text"><small class="text-muted">Creado: <%= comment.created_at %></small></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+  </div>
+    <% end %>
+  </div>
+
+<% if user_signed_in? %>
+<%= link_to 'nuevo comentario', new_user_comment_path(current_user.id), class: 'btn btn-success' %>
+<% end %>
+<div>
+    <%= link_to_next_page @comments, 'mostrar mas paginas', class: "text_white" %> <br>
+    <%= link_to_previous_page @comments, 'retroceder', class: "text_white" %>
+<div/>
